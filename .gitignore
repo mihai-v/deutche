@@ -22,3 +22,9 @@
 hs_err_pid*
 /target/
 /nbactions.xml
+
+
+# idea projects
+.idea/
+media-store.iml
+
