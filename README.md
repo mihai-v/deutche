@@ -1,2 +1,0 @@
-# deutche
-media store
