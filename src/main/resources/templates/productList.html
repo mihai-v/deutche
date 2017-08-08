@@ -1,20 +1,17 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
 	<head>
 		<title>TODO supply a title</title>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 	<body>
-		<div>TODO write content</div>
-		<h1>
-			<span th:text="'Message: ' + ${message}"></span>
-		</h1>
+		<div style="float: right; margin: 10px;" th:if="${session.cart != null}" class="panel panel-default">
+			<div class="panel-body" th:text="'Produse in cos: ' + ${#lists.size(session.cart)}"></div>
+		</div>
 		<table class="table table-bordered table-hover table-striped">
 			<thead>
 				<tr>
@@ -23,13 +20,13 @@ and open the template in the editor.
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>     
+			<tbody>
 				<tr th:each="product, stat : ${productList}">         
 					<td th:text="${product.Name}" ></td>
 					<td th:text="${product.Price}"></td>
 					<td>
-						<form action="/cart-post" method="POST">
-							<input type="submit" value="add" />
+						<form action="/addProductToCart" method="POST">
+							<input type="submit" value="adauga in cos" class="btn btn-primary"/>
 							<input type="hidden" th:value="${product.id}"  name="productId" />
 						</form>
 					</td>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,34 +18,33 @@ import ro.db.mediastore.service.ProductService;
  */
 @Controller
 public class HomeController {
+
 	@Autowired
 	private ProductService ps;
-@GetMapping("/")
+
+	@GetMapping("/")
 	public String welcome(Map<String, Object> model) {
-		model.put("message", "ceva");
+		model.put("message", "Bine ai venit in magazin.");
 		return "welcome";
 	}
-	@GetMapping("/produse")
+
+	@GetMapping("/products")
 	public String productList(Map<String, Object> model) {
-		
+
 		List<Product> products = ps.getAllProducts();
-		model.put("productList",products );
+		model.put("productList", products);
 		return "productList";
 	}
-	@PostMapping("/cart-post")
-	public String testMestod(HttpServletRequest request, long productId, Map<String, Object> model){ 
-		
-				if( request.getSession(true).getAttribute("cart") == null) {
-					request.getSession().setAttribute("cart", new ArrayList<Product>());
-				}
-				List<Product> prod =(List<Product>) request.getSession().getAttribute("cart");
-				
-				prod.add(ps.getProduct((productId)));
-				
-				request.getSession().setAttribute("cart", prod);
-				
-     List<Product> products = ps.getAllProducts();
-		model.put("productList",products );
-		return "productList";
-  }
+
+	@PostMapping("/addProductToCart")
+	public String testMestod(HttpSession session, Map<String, Object> model, long productId) {
+		if (session.getAttribute("cart") == null) {
+			session.setAttribute("cart", new ArrayList<>());
+		}
+		List<Product> prod = (List<Product>) session.getAttribute("cart");
+
+		prod.add(ps.getProduct((productId)));
+
+		return "redirect:/products";
+	}
 }
