@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "Products")
 public class Product {
 	 @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long ID;
+	private long id;
 	@Column(name = "NAME",nullable=false)
 	private String name;
 	private BigDecimal price;
@@ -25,6 +25,12 @@ public class Product {
 		this.name = name;
 		this.price = price; 
 	}
+
+	public long getId() {
+		return id;
+	}
+
+	
 
 	public String getName() {
 		return name;

@@ -20,4 +20,8 @@ public class ProductService {
 	public List<Product> getAllProducts() {
 		return productDAO.findAllProducts();
 	}
+	public Product getProduct(long id) {
+		return productDAO.getProductById(id);
+	}
+
 }

@@ -22,4 +22,7 @@ public class ProductsDAO {
     Query query = em.createQuery("FROM Product e");
     return (List<Product>) query.getResultList();
   }
+	public Product getProductById(long id) {
+		return em.find(Product.class, id);
+}
 }
