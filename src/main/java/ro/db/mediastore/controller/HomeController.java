@@ -1,12 +1,12 @@
 package ro.db.mediastore.controller;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import ro.db.mediastore.model.Product;
+import ro.db.mediastore.service.ProductService;
 
 /**
  *
@@ -14,6 +14,8 @@ import ro.db.mediastore.model.Product;
  */
 @Controller
 public class HomeController {
+	@Autowired
+	private ProductService ps;
 @GetMapping("/")
 	public String welcome(Map<String, Object> model) {
 		model.put("message", "ceva");
@@ -21,9 +23,8 @@ public class HomeController {
 	}
 	@GetMapping("/produse")
 	public String productList(Map<String, Object> model) {
-		List<Product> products = new ArrayList<Product>();
-		products.add(new Product("assdd",new BigDecimal(33)));
-		products.add(new Product("assdfffd",new BigDecimal(353)));
+		
+		List<Product> products = ps.getAllProducts();
 		model.put("productList",products );
 		return "productList";
 	}
